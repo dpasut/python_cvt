@@ -1,5 +1,4 @@
-# Python code for creating a CVT
-# Vassilis Vassiliades - Inria, Nancy - April 2018
+# Python code for creating a CVT using KMeans
 
 import numpy as np
 import matplotlib.pyplot as plt
@@ -42,14 +41,14 @@ if args.tolerance:
 if args.verbose:
     verbose = bool(args.verbose)
 
-print 'Using:'
-print 'num_centroids=',num_centroids
-print 'dimensionality=',dimensionality
-print 'num_samples=',num_samples
-print 'num_replicates=',num_replicates
-print 'max_iterations=',max_iterations
-print 'tolerance=',tolerance
-print 'verbose=',tolerance
+print('Using:')
+print('num_centroids=',num_centroids)
+print('dimensionality=',dimensionality)
+print('num_samples=',num_samples)
+print('num_replicates=',num_replicates)
+print('max_iterations=',max_iterations)
+print('tolerance=',tolerance)
+print('verbose=',verbose)
 
 X = np.random.rand(num_samples,dimensionality)
 
@@ -60,7 +59,7 @@ kmeans = KMeans(
     n_jobs=-1, 
     max_iter=max_iterations, 
     tol=tolerance,
-    verbose=0)
+    verbose=verbose)
 
 kmeans.fit(X)
 centroids = kmeans.cluster_centers_
@@ -68,8 +67,9 @@ centroids = kmeans.cluster_centers_
 filename = 'centroids_' + str(num_centroids) + '_' + str(dimensionality) + '.dat'
 
 with open(filename, 'w') as f:
-    print 'Writing to',filename,'...'
+    print('Writing to {}...'.format(filename))
     for p in centroids:
         for item in p:
             f.write(str(item) + ' ')
         f.write('\n')
+    print("Writing complete.")
