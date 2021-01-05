@@ -82,7 +82,9 @@ if args.tolerance:
     tolerance = float(args.tolerance)
 if args.verbose:
     verbose = bool(args.verbose)
-
+if args.algorithm:
+    algorithm = str(args.algorithm)
+    
 print("Using:")
 print("num_centroids=", num_centroids)
 print("dimensionality=", dimensionality)
