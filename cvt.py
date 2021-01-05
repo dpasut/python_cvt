@@ -124,7 +124,7 @@ kmeans = KMeans(
 
 kmeans.fit(X)
 centroids = kmeans.cluster_centers_
-end=datetime.datetime.now()
+end = datetime.datetime.now()
 filename = "centroids_" + str(num_centroids) + "_" + str(dimensionality) + ".dat"
 
 with open(filename, "w") as f:
@@ -135,4 +135,15 @@ with open(filename, "w") as f:
         f.write("\n")
     print("Writing complete.")
 
-print("Runtime: {}".format(end-start))
+print("Runtime: {}".format(end - start))
+
+if verbose == 1:
+    dist = np.zeros(num_centroids ** 2 - num_centroids)
+    count = 0
+    for i in range(num_centroids):
+        for j in range(num_centroids):
+            if i != j:
+                dist[count] = np.linalg.norm(centroids[i] - centroids[j])
+                count += 1
+    print("Variance of L2-norms of centroids: {}".format(np.var(dist)))
+    print("The average distance between centroids is: {}".format(np.average(dist)))
