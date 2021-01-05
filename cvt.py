@@ -93,6 +93,7 @@ print("num_replicates=", num_replicates)
 print("max_iterations=", max_iterations)
 print("tolerance=", tolerance)
 print("verbose=", verbose)
+print("algorithm=", algorithm)
 
 X = np.random.rand(num_samples, dimensionality)
 
