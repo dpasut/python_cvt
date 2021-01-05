@@ -13,7 +13,8 @@ num_samples = 100000
 num_replicates = 1
 max_iterations = 100
 tolerance = 0.0001
-verbose = True
+verbose = 0
+algorithm = "full" 
 
 parser = argparse.ArgumentParser()
 parser.add_argument(
@@ -55,8 +56,14 @@ parser.add_argument(
 parser.add_argument(
     "-v",
     "--verbose",
-    type=bool,
-    help="increase output verbosity (default: " + str(verbose) + ")",
+    type=int,
+    help="increase output verbosity [0,1] (default: " + str(verbose) + ")",
+)
+parser.add_argument(
+    "-a",
+    "--algorithm",
+    type=str,
+    help="increase output verbosity [full, elkan] (default: " + algorithm + ")",
 )
 args = parser.parse_args()
 
@@ -89,9 +96,9 @@ X = np.random.rand(num_samples, dimensionality)
 
 kmeans = KMeans(
     init="k-means++",
+    algorithm=algorithm,
     n_clusters=num_centroids,
     n_init=num_replicates,
-    n_jobs=-1,
     max_iter=max_iterations,
     tol=tolerance,
     verbose=verbose,
