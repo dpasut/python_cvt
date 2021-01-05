@@ -18,6 +18,12 @@ algorithm = "full"
 
 parser = argparse.ArgumentParser()
 parser.add_argument(
+    "-a",
+    "--algorithm",
+    type=str,
+    help="increase output verbosity [full, elkan] (default: " + algorithm + ")",
+)
+parser.add_argument(
     "-d",
     "--dimensionality",
     type=int,
@@ -59,15 +65,11 @@ parser.add_argument(
     type=int,
     help="increase output verbosity [0,1] (default: " + str(verbose) + ")",
 )
-parser.add_argument(
-    "-a",
-    "--algorithm",
-    type=str,
-    help="increase output verbosity [full, elkan] (default: " + algorithm + ")",
-)
 args = parser.parse_args()
 
 # Change the parameters based on the arguments
+if args.algorithm:
+    algorithm = str(args.algorithm)
 if args.dimensionality:
     dimensionality = int(args.dimensionality)
 if args.centroids:
@@ -82,10 +84,10 @@ if args.tolerance:
     tolerance = float(args.tolerance)
 if args.verbose:
     verbose = bool(args.verbose)
-if args.algorithm:
-    algorithm = str(args.algorithm)
+
     
 print("Using:")
+print("algorithm=", algorithm)
 print("num_centroids=", num_centroids)
 print("dimensionality=", dimensionality)
 print("num_samples=", num_samples)
@@ -93,7 +95,6 @@ print("num_replicates=", num_replicates)
 print("max_iterations=", max_iterations)
 print("tolerance=", tolerance)
 print("verbose=", verbose)
-print("algorithm=", algorithm)
 
 X = np.random.rand(num_samples, dimensionality)
 
