@@ -7,6 +7,7 @@ from sklearn.cluster import KMeans
 import argparse
 
 # Default values
+random_seed = None
 num_centroids = 7
 dimensionality = 2
 num_samples = 100000
@@ -18,10 +19,16 @@ algorithm = "full"
 
 parser = argparse.ArgumentParser()
 parser.add_argument(
+    "-s",
+    "--random_seed",
+    type=int,
+    help="random seed (default: None)",
+)
+parser.add_argument(
     "-a",
     "--algorithm",
     type=str,
-    help="increase output verbosity [full, elkan] (default: " + algorithm + ")",
+    help="algorithm choice [full, elkan] (default: " + algorithm + ")",
 )
 parser.add_argument(
     "-d",
@@ -68,6 +75,8 @@ parser.add_argument(
 args = parser.parse_args()
 
 # Change the parameters based on the arguments
+if args.random_seed:
+    random_seed = int(args.random_seed)
 if args.algorithm:
     algorithm = str(args.algorithm)
 if args.dimensionality:
@@ -87,6 +96,7 @@ if args.verbose:
 
     
 print("Using:")
+print("random_seed=", random_seed)
 print("algorithm=", algorithm)
 print("num_centroids=", num_centroids)
 print("dimensionality=", dimensionality)
@@ -96,6 +106,8 @@ print("max_iterations=", max_iterations)
 print("tolerance=", tolerance)
 print("verbose=", verbose)
 
+if random_seed != None:
+    np.random.seed(random_seed)
 X = np.random.rand(num_samples, dimensionality)
 
 kmeans = KMeans(
