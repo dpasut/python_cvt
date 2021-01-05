@@ -5,6 +5,7 @@ import matplotlib.pyplot as plt
 import sys
 from sklearn.cluster import KMeans
 import argparse
+import datetime
 
 # Default values
 random_seed = None
@@ -15,7 +16,7 @@ num_replicates = 1
 max_iterations = 100
 tolerance = 0.0001
 verbose = 0
-algorithm = "full" 
+algorithm = "full"
 
 parser = argparse.ArgumentParser()
 parser.add_argument(
@@ -94,7 +95,7 @@ if args.tolerance:
 if args.verbose:
     verbose = bool(args.verbose)
 
-    
+
 print("Using:")
 print("random_seed=", random_seed)
 print("algorithm=", algorithm)
@@ -106,6 +107,7 @@ print("max_iterations=", max_iterations)
 print("tolerance=", tolerance)
 print("verbose=", verbose)
 
+start = datetime.datetime.now()
 if random_seed != None:
     np.random.seed(random_seed)
 X = np.random.rand(num_samples, dimensionality)
@@ -122,7 +124,7 @@ kmeans = KMeans(
 
 kmeans.fit(X)
 centroids = kmeans.cluster_centers_
-
+end=datetime.datetime.now()
 filename = "centroids_" + str(num_centroids) + "_" + str(dimensionality) + ".dat"
 
 with open(filename, "w") as f:
@@ -132,3 +134,5 @@ with open(filename, "w") as f:
             f.write(str(item) + " ")
         f.write("\n")
     print("Writing complete.")
+
+print("Runtime: {}".format(end-start))
