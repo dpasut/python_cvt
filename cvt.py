@@ -16,13 +16,48 @@ tolerance = 0.0001
 verbose = True
 
 parser = argparse.ArgumentParser()
-parser.add_argument("-d", "--dimensionality", type=int, help="space dimensionality (default: " + str(dimensionality) + ")")
-parser.add_argument("-c", "--centroids", type=int, help="number of centroids (default: " + str(num_centroids) + ")")
-parser.add_argument("-n", "--numsamples", type=int, help="number of sampled points (default: " + str(num_samples) + ")")
-parser.add_argument("-i", "--iterations", type=int, help="maximum number of kmeans iterations (default: " + str(max_iterations) + ")")
-parser.add_argument("-r", "--restarts", type=int, help="number of kmeans restarts (default: " + str(num_replicates) + ")")
-parser.add_argument("-t", "--tolerance", type=float, help="tolerance level (default: " + str(tolerance) + ")")
-parser.add_argument("-v", "--verbose", type=bool, help="increase output verbosity (default: " + str(verbose) + ")")
+parser.add_argument(
+    "-d",
+    "--dimensionality",
+    type=int,
+    help="space dimensionality (default: " + str(dimensionality) + ")",
+)
+parser.add_argument(
+    "-c",
+    "--centroids",
+    type=int,
+    help="number of centroids (default: " + str(num_centroids) + ")",
+)
+parser.add_argument(
+    "-n",
+    "--numsamples",
+    type=int,
+    help="number of sampled points (default: " + str(num_samples) + ")",
+)
+parser.add_argument(
+    "-i",
+    "--iterations",
+    type=int,
+    help="maximum number of kmeans iterations (default: " + str(max_iterations) + ")",
+)
+parser.add_argument(
+    "-r",
+    "--restarts",
+    type=int,
+    help="number of kmeans restarts (default: " + str(num_replicates) + ")",
+)
+parser.add_argument(
+    "-t",
+    "--tolerance",
+    type=float,
+    help="tolerance level (default: " + str(tolerance) + ")",
+)
+parser.add_argument(
+    "-v",
+    "--verbose",
+    type=bool,
+    help="increase output verbosity (default: " + str(verbose) + ")",
+)
 args = parser.parse_args()
 
 # Change the parameters based on the arguments
@@ -41,35 +76,36 @@ if args.tolerance:
 if args.verbose:
     verbose = bool(args.verbose)
 
-print('Using:')
-print('num_centroids=',num_centroids)
-print('dimensionality=',dimensionality)
-print('num_samples=',num_samples)
-print('num_replicates=',num_replicates)
-print('max_iterations=',max_iterations)
-print('tolerance=',tolerance)
-print('verbose=',verbose)
+print("Using:")
+print("num_centroids=", num_centroids)
+print("dimensionality=", dimensionality)
+print("num_samples=", num_samples)
+print("num_replicates=", num_replicates)
+print("max_iterations=", max_iterations)
+print("tolerance=", tolerance)
+print("verbose=", verbose)
 
-X = np.random.rand(num_samples,dimensionality)
+X = np.random.rand(num_samples, dimensionality)
 
 kmeans = KMeans(
-    init='k-means++', 
-    n_clusters=num_centroids, 
-    n_init=num_replicates, 
-    n_jobs=-1, 
-    max_iter=max_iterations, 
+    init="k-means++",
+    n_clusters=num_centroids,
+    n_init=num_replicates,
+    n_jobs=-1,
+    max_iter=max_iterations,
     tol=tolerance,
-    verbose=verbose)
+    verbose=verbose,
+)
 
 kmeans.fit(X)
 centroids = kmeans.cluster_centers_
 
-filename = 'centroids_' + str(num_centroids) + '_' + str(dimensionality) + '.dat'
+filename = "centroids_" + str(num_centroids) + "_" + str(dimensionality) + ".dat"
 
-with open(filename, 'w') as f:
-    print('Writing to {}...'.format(filename))
+with open(filename, "w") as f:
+    print("Writing to {}...".format(filename))
     for p in centroids:
         for item in p:
-            f.write(str(item) + ' ')
-        f.write('\n')
+            f.write(str(item) + " ")
+        f.write("\n")
     print("Writing complete.")
