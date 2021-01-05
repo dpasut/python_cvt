@@ -13,15 +13,3 @@ Vassilis Vassiliades
 python cvt.py -h
 ```
 
-## How to use the C++ code
-
-### Configure and build
-```
-./waf configure
-./waf
-```
-
-### Run
-```
-./build/cvt -h
-```
